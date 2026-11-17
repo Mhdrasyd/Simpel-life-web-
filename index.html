@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d1218">
+<title>Simple Life RPG - Mafia Underworld</title>
+<script>window.__errs=[];window.addEventListener('error',function(e){window.__errs.push(String(e.message||e));});</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+<header>
+<div class="brand"><span class="logo">SL</span><div><small>SEBUAH KISAH DI SUDUT KOTA</small><h1>SIMPLE LIFE <b>RPG</b></h1></div></div>
+<div class="top-tools">
+<span class="edition">MAFIA UNDERWORLD / WEB 2.0</span>
+<button id="music-btn" class="icon-btn" type="button" aria-label="Pemutar musik" title="Musik">♪<i id="music-dot"></i></button>
+<button id="cloud-btn" class="icon-btn" type="button" aria-label="Cloud save" title="Cloud save">☁<i id="cloud-dot"></i></button>
+</div>
+</header>
+<main id="app"></main>
+<footer>SEMUA UANG DI GAME BERSIFAT FIKTIF · MUSIK ASLI BEBAS HAK CIPTA</footer>
+</div>
+<div id="music-panel" class="music-panel" hidden>
+<div class="mp-row"><span class="eyebrow">PEMUTAR MUSIK</span><span id="mp-track" class="mp-track">JEDA</span></div>
+<div class="mp-row mp-controls"><button id="mp-toggle" class="primary" type="button">▶ Putar</button><input id="mp-vol" type="range" min="0" max="100" value="45" aria-label="Volume musik"></div>
+<small>Chiptune asli, disintesis langsung di perangkatmu.<br>Tanpa file audio · bebas hak cipta.</small>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="cloud-modal" class="cloud-modal" hidden></div>
+<script src="content.js"></script>
+<script src="engine.js"></script>
+<script src="music-data.js"></script>
+<script src="music.js"></script>
+<script src="cloud.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

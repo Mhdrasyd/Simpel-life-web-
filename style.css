@@ -1,0 +1,231 @@
+/* Simple Life RPG: Mafia Underworld — Web 2.0
+   Gaya pixel retro, gelap, mobile-first. */
+:root{color-scheme:dark;--bg:#10151c;--panel:#19222b;--line:#34404a;--muted:#9eafb9;--text:#edf1e7;--green:#c8ed89;--gold:#e9be74;--pink:#e2a0a0;--blue:#8fd0e8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.6 'Courier New',monospace}
+.shell{max-width:1160px;margin:auto;padding:28px 30px}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:24px}
+.brand{display:flex;gap:14px;align-items:center}
+.logo{display:grid;place-items:center;background:var(--green);color:#16211a;width:48px;height:48px;font-weight:bold;font-size:23px;box-shadow:4px 4px 0 #435444}
+.brand small{color:var(--muted);font-size:10px;letter-spacing:1.5px}
+h1{font-size:23px;line-height:1.1;letter-spacing:-1px;margin:4px 0}
+h1 b{color:var(--green)}
+.edition{font-size:10px;color:var(--muted);letter-spacing:1px}
+h2{font-size:25px;line-height:1.3;margin:12px 0}
+h3{font-size:16px;line-height:1.4;margin:9px 0}
+p{margin:12px 0}
+button,input{font:inherit}
+button{background:#24313b;color:var(--text);border:1px solid #51616b;box-shadow:0 3px 0 #080e13;padding:11px 15px;text-align:left;cursor:pointer;min-height:46px;border-radius:0;touch-action:manipulation}
+button:hover{border-color:var(--green);background:#2b3c43}
+button:active{transform:translateY(2px);box-shadow:none}
+button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+button:disabled{opacity:.43;cursor:not-allowed}
+button.primary{background:var(--green);border-color:var(--green);color:#172518;font-weight:bold}
+button.primary:hover{background:#d8f6a4}
+small{display:block;font-size:11px;color:var(--muted)}
+.eyebrow{font-size:10px;letter-spacing:1px;color:var(--green)}
+
+/* Alat pojok atas: musik & cloud */
+.top-tools{display:flex;align-items:center;gap:10px}
+.icon-btn{position:relative;min-width:46px;min-height:46px;padding:0;text-align:center;font-size:20px;line-height:1}
+.icon-btn i{position:absolute;top:6px;right:6px;width:8px;height:8px;background:#5a6a74;border:1px solid #0b1014}
+.icon-btn i.on{background:var(--green)}
+.icon-btn i.busy{background:var(--gold)}
+.icon-btn.on{border-color:var(--green);color:var(--green)}
+@keyframes blink{50%{opacity:.35}}
+#music-btn:not(.on) #music-dot{animation:blink 1.2s infinite;background:var(--gold)}
+
+/* Panel pemutar musik */
+.music-panel{position:fixed;top:86px;right:16px;z-index:60;width:250px;background:var(--panel);border:1px solid var(--line);box-shadow:6px 6px 0 #080e13;padding:16px}
+.mp-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.mp-track{font-size:11px;color:var(--gold);letter-spacing:1px}
+.mp-controls button{white-space:nowrap;font-size:12px;padding:9px 12px;min-height:40px}
+input[type=range]{flex:1;accent-color:var(--green);min-height:32px}
+.music-panel>small{font-size:10px;line-height:1.7}
+
+/* Toast kejadian terbaru */
+#toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,80px);z-index:70;max-width:min(92vw,480px);background:#101c16;border:1px solid var(--green);box-shadow:5px 5px 0 #080e13;color:var(--green);font-size:12px;padding:11px 16px;opacity:0;transition:transform .22s ease,opacity .22s ease;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Modal cloud save */
+.cloud-modal{position:fixed;inset:0;z-index:80;background:rgba(6,10,14,.72);display:flex;align-items:flex-start;justify-content:center;padding:22px 14px;overflow-y:auto}
+.cloud-modal[hidden],.music-panel[hidden]{display:none}
+.cloud-panel{background:var(--panel);border:1px solid var(--line);box-shadow:8px 8px 0 #080e13;width:100%;max-width:520px;padding:22px 24px;margin:auto}
+.cp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cp-head .icon-btn{min-height:38px;min-width:38px;font-size:14px}
+.cp-status{font-size:12px;border:1px dashed var(--line);padding:10px 12px;color:var(--gold)}
+.cp-slot,.cp-adopt{margin:14px 0}
+.cp-slot-row{display:flex;gap:10px;margin:6px 0}
+.cp-slot-row code{flex:1;display:grid;place-items:center;background:#0f1720;border:1px solid #53616c;color:var(--green);font-size:19px;letter-spacing:3px;padding:10px}
+.cp-slot-row input{flex:1;background:#0f1720;border:1px solid #53616c;color:var(--text);padding:10px 12px;text-transform:uppercase;letter-spacing:2px;min-width:0}
+.cp-slot-row button{white-space:nowrap;font-size:12px}
+.cp-actions{display:grid;gap:10px;margin:16px 0}
+.cp-auto{display:flex;align-items:center;gap:9px;font-size:12px;margin:10px 0}
+.cp-auto input{width:18px;height:18px;accent-color:var(--green)}
+
+.intro{border:1px solid var(--line);background:var(--panel);max-width:850px;margin:30px auto}
+.intro .scene{height:225px}
+.intro-copy{padding:32px 40px}
+.intro-copy h2{font-size:36px;margin:14px 0 20px}
+.intro-copy em{font-style:normal;color:var(--green)}
+.intro-copy p{color:#b7c3ca}
+form{margin-top:28px}
+form label{font-size:12px;display:block;margin-bottom:8px}
+.name-row{display:flex;gap:10px}
+.name-row input{background:#0f1720;border:1px solid #53616c;color:var(--text);min-width:0;padding:12px;flex:1}
+.hint{font-size:11px!important;color:var(--muted);line-height:1.8;margin:20px 0 0}
+
+/* Pemandangan kota / lahan, dengan warna mengikuti jam dalam game */
+.scene{height:174px;position:relative;overflow:hidden;background:linear-gradient(#192b36,#29414b);border:1px solid #42515b;isolation:isolate;transition:background 1s}
+.scene.t-pagi{background:linear-gradient(#23394a,#3d5a63)}
+.scene.t-siang{background:linear-gradient(#2e4d5e,#4d7076)}
+.scene.t-sore{background:linear-gradient(#33304a,#5c4a4e)}
+.scene.t-siang .moon{background:#f2d16b;box-shadow:0 0 30px #f2d16b55}
+.scene.t-pagi .moon{background:#efe3b8;box-shadow:0 0 22px #efe3b833}
+.scene.t-sore .moon{background:#e8a56b;box-shadow:0 0 25px #e8a56b44}
+.moon{position:absolute;top:24px;right:20%;width:26px;height:26px;background:#e8dba4;box-shadow:0 0 25px #e8dba41a}
+.stars{position:absolute;top:12px;left:16%;color:#829a9c;font-size:17px;white-space:nowrap}
+.t-siang .stars{opacity:.25}
+.skyline{position:absolute;bottom:25px;left:0;right:0;height:96px;display:flex;align-items:flex-end;gap:8px;opacity:.95}
+.skyline i{display:block;height:70px;width:14%;background:repeating-linear-gradient(90deg,transparent 0 12px,#14232d 12px 23px),repeating-linear-gradient(0deg,#526563 0 5px,#14232d 5px 18px);border:7px solid #14232d;border-top-width:12px;box-shadow:0 -5px 0 #304451}
+.skyline i:nth-child(2n){height:100px}
+.skyline i:nth-child(3n){height:54px}
+.skyline i:nth-child(4){height:115px;width:19%;background-color:#796d4e}
+.street{position:absolute;bottom:0;height:26px;background:#101c24;border-top:3px solid #4f5c5c;width:100%}
+.scene-label{position:absolute;bottom:8px;left:13px;font-size:9px;letter-spacing:2px;color:#a9b9ae}
+.person{position:absolute;bottom:19px;right:26%;height:28px;width:13px;background:#b7d889;box-shadow:0 8px 0 -3px #0c151b}
+.person:before{content:'';position:absolute;width:12px;height:11px;top:-10px;background:#d9b891;box-shadow:0 -4px 0 #18222c}
+.person:after{content:'';position:absolute;bottom:-7px;left:0;width:5px;height:9px;background:#0b141c;box-shadow:8px 0 0 #0b141c}
+
+.status{background:var(--panel);padding:20px 24px;border:1px solid var(--line);margin-bottom:22px}
+.status-top{display:flex;justify-content:space-between;align-items:center}
+.status h2{margin:4px 0 12px}
+.clock{font-size:29px;text-align:right;color:var(--gold);line-height:1.3}
+.clock small{font-size:9px;letter-spacing:2px}
+.meters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin:8px 0 12px}
+.meters label{font-size:10px;letter-spacing:1px;display:flex;justify-content:space-between;color:var(--muted)}
+.meters b{color:var(--text);letter-spacing:0}
+.meter{height:10px;background:#101820;margin-top:6px;border:1px solid #35444d;position:relative}
+.meter:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 9px,rgba(8,12,16,.5) 9px 10px);pointer-events:none}
+.meter i{display:block;height:100%;background:var(--pink);transition:width .25s}
+.energy i,.growth i{background:var(--green)}
+.water i{background:var(--blue)}
+.wallet strong{font-size:24px;color:var(--gold);line-height:1.1}
+.weather{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);padding-top:12px;border-top:1px solid var(--line)}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px;font-size:11px;letter-spacing:.6px;color:#b9c7ca}
+.tag{font-size:9px;color:var(--green);border:1px solid #526447;padding:2px 6px;white-space:nowrap}
+.activities{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{display:flex;gap:13px;align-items:center;padding:16px 12px;min-height:95px}
+.tile>span:last-child{margin-left:auto}
+.tile b{font-size:13px}
+.tile small{margin-top:4px;font-size:10px}
+.tile-icon{color:var(--gold);font-size:28px;line-height:1}
+.danger .tile-icon,.danger b{color:var(--pink)}
+.farm-tile{grid-column:1/-1;background:#22382f;border-color:#546e53}
+.farm-tile .tile-icon{color:var(--green)}
+.cloud-tile .tile-icon{color:var(--blue)}
+.quest-banner{background:#1c252e;border-left:3px solid var(--gold);padding:14px;margin:18px 0}
+.quest-banner b{display:block;font-size:12px;margin:4px 0}
+.quest-banner span{font-size:11px;color:var(--gold)}
+aside{background:var(--panel);border:1px solid var(--line);padding:0 18px 18px;align-self:start}
+aside .section-title{font-size:10px}
+aside .section-title span:last-child{color:var(--green)}
+.journal{height:326px;overflow-y:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-top:8px}
+.journal p{font-size:12px;color:#97a7b2;border-bottom:1px dashed #34414b;padding:0 0 15px;margin:10px 0 16px}
+.journal .latest{color:#e1e8d7;animation:latest-in .4s ease}
+@keyframes latest-in{from{opacity:0;transform:translateY(-4px)}}
+.save-status{font-size:10px;color:var(--green);padding:15px 0 5px}
+.subtle{border:0;box-shadow:none;background:transparent;color:var(--muted);font-size:11px;min-height:38px;padding:7px 4px;display:inline-block}
+.back{background:transparent;border:0;box-shadow:none;color:var(--muted);padding:0;font-size:11px;margin-bottom:12px}
+.stack{display:grid;gap:12px}
+.card{display:block;padding:18px;background:var(--panel);border:1px solid var(--line)}
+.card b{display:block;font-size:14px}
+.card small{margin-top:7px}
+.muted{color:var(--muted);font-size:12px}
+.quest-card p{font-size:12px;color:#bdc8ca}
+.quest-card button{margin-top:14px}
+blockquote{border-left:3px solid var(--green);padding:14px 18px;margin:18px 0;background:var(--panel);font-size:13px;color:#d2deca}
+.debt{padding:20px 0}
+.debt strong{display:block;font-size:36px;color:var(--pink)}
+.plots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plot{padding:16px;background:#1e2b28;border:1px solid #46584a;min-width:0}
+.plot .eyebrow{font-size:9px}
+.plot button{width:100%;font-size:11px;padding:9px;margin-top:8px}
+.plot small{font-size:10px;margin-top:6px}
+.crop{text-align:center;font-size:42px;line-height:1.8;filter:saturate(.75)}
+.crop.empty{color:#7e8760}
+.ready{border-color:var(--green)}
+.ready .eyebrow{color:var(--green)}
+.market-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.market-actions button{font-size:11px}
+.farmscape{background:linear-gradient(#29444a 62%,#3a5133 62%)}
+.farmscape .skyline{opacity:.35;transform:scale(.65);transform-origin:left bottom}
+.sprouts{position:absolute;right:10%;bottom:26px;color:#b6c578;font-size:25px}
+.farmscape .street{background:#353826;border-color:#6c7650}
+.fight,.ending{text-align:center;background:var(--panel);padding:28px;border:1px solid var(--line)}
+.boss-art{font-size:110px;color:var(--pink);text-shadow:6px 5px #583f48}
+.boss-art.hit{animation:shake .32s}
+@keyframes shake{20%{transform:translate(-7px,3px)}45%{transform:translate(6px,-3px)}70%{transform:translate(-4px,-2px)}90%{transform:translate(3px,2px)}}
+.fight .meter{max-width:300px;margin:20px auto}
+.fight-actions{display:flex;gap:12px;justify-content:center}
+.end-icon{font-size:85px;color:var(--gold)}
+footer{text-align:center;margin-top:28px;font-size:9px;letter-spacing:1px;color:#8b9ba4}
+
+@media(min-width:900px){.content>.scene{height:190px}}
+@media(max-width:760px){
+.shell{padding:18px 14px}
+header{padding-bottom:16px;margin-bottom:16px}
+.edition{display:none}
+h1{font-size:21px}
+.brand small{font-size:8px}
+.logo{width:40px;height:40px;font-size:20px}
+.layout{grid-template-columns:1fr;gap:18px}
+.status{position:sticky;top:6px;z-index:40;padding:16px;margin-bottom:16px;box-shadow:0 6px 0 rgba(6,10,14,.35)}
+.status h2{font-size:23px}
+.meters{gap:14px;grid-template-columns:1fr 1fr}
+.wallet{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding-top:5px}
+.wallet strong{font-size:22px}
+.weather{font-size:10px}
+.clock{font-size:26px}
+.activities{gap:8px}
+.tile{min-height:105px;padding:12px 10px;gap:8px}
+.tile-icon{font-size:24px}
+.tile b{font-size:12px}
+.tile small{font-size:9px}
+.tile>span:last-child:not(.tag){display:none}
+.farm-tile{min-height:78px}
+.scene{height:150px}
+.intro{margin:0}
+.intro .scene{height:190px}
+.intro-copy{padding:24px 20px}
+.intro-copy h2{font-size:28px}
+.name-row{flex-direction:column}
+.name-row button{text-align:center}
+.intro-copy p{font-size:12px}
+.section-title{font-size:10px}
+.tag{font-size:8px}
+.journal{height:190px}
+.plots{gap:8px}
+.plot{padding:12px}
+.plot .eyebrow{font-size:8px}
+.plot h3{font-size:14px}
+.crop{font-size:35px}
+.fight,.ending{padding:24px 16px}
+.music-panel{top:auto;bottom:14px;right:14px;left:14px;width:auto}
+footer{font-size:8px}
+}
+@media(prefers-reduced-motion:no-preference){
+button{transition:background .12s,border-color .12s}
+.content{animation:fadeup .22s ease}
+@keyframes fadeup{from{opacity:.4;transform:translateY(6px)}}
+}
+
+/* Tanaman pixel: tiga tahap tumbuh */
+.pixel-crop{display:inline-block;position:relative;width:4px;height:30px;background:#96af67;margin:16px 25px 8px;box-shadow:4px 0 #698d54}
+.pixel-crop:before{content:'';position:absolute;top:2px;left:-8px;width:8px;height:5px;background:#e2c374;box-shadow:4px -6px #e2c374,12px -8px #e2c374,16px -2px #e2c374,0 8px #e2c374,16px 8px #e2c374,4px 14px #b6a168,12px 14px #b6a168}
+.pixel-crop.jagung:before{width:12px;height:22px;background:#ebcc70;left:-4px;top:-2px;box-shadow:4px 0 #bca454,-4px 10px #789858,8px 14px #789858}
+.crop:has(.pixel-crop){height:78px;line-height:1}
+.crop.stage-1 .pixel-crop{transform:scale(.45);transform-origin:bottom center}
+.crop.stage-2 .pixel-crop{transform:scale(.72);transform-origin:bottom center}

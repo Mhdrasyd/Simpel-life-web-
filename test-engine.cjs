@@ -1,0 +1,20 @@
+const assert=require('node:assert/strict');
+global.CONTENT=require('./content.js');
+const {Game,SEEDS,JOBS}=require('./engine.js');
+let tests=0;function check(name,fn){fn();tests++;console.log('PASS',name);}
+check('initial state',()=>{const {s}=new Game();assert.equal(s.money,5000);assert.equal(s.mafia_debt,1000);assert.equal(s.hour,8);});
+check('all job values and times',()=>JOBS.forEach((j,i)=>{const g=new Game(undefined,()=>.9);g.work(i);assert.equal(g.s.money,5000+j.reward);assert.equal(g.s.energy,100-j.energy);assert.equal(g.s.hour,8+j.hours);}));
+check('parking fine',()=>{const g=new Game(undefined,()=>.1);g.work(4);assert.equal(g.s.money,4970);});
+check('no energy overspend',()=>{const g=new Game();g.s.energy=20;g.work(1);assert.equal(g.s.money,5000);assert.equal(g.s.energy,20);});
+check('rest',()=>{const g=new Game();g.s.hp=45;g.s.energy=1;g.rest();assert.equal(g.s.hp,75);assert.equal(g.s.energy,100);assert.equal(g.s.hour,16);});
+check('all 12 quests sequential, rewards once',()=>{const g=new Game();for(const q of CONTENT.QUEST_TAMBAHAN){g.s.energy=100;const money=g.s.money;g.quest(q.id);assert.equal(g.s.side_quest,q.id);g.quest(q.id,true);assert.equal(g.s.money,money+q.reward);assert.equal(g.s.energy,100-q.energy);g.quest(q.id,true);assert.equal(g.s.money,money+q.reward);}assert.equal(g.s.completed_side_quests.length,12);});
+check('locked quest and active quest restrictions',()=>{const g=new Game();g.quest('harlot_2',true);assert.equal(g.s.side_quest,null);g.quest('harlot_1');g.quest('togar_1');assert.equal(g.s.side_quest,'harlot_1');});
+check('debt payment',()=>{const g=new Game();for(let i=0;i<7;i++)g.debt();assert.equal(g.s.mafia_debt,0);assert.equal(g.s.money,4000);assert.equal(g.s.hour,13);});
+check('quest gate, fight, flee',()=>{const g=new Game();g.attack();assert.equal(g.s.fight,null);g.oldMan();g.attack();assert.equal(g.s.fight.hp,80);g.punch();g.flee();assert.equal(g.s.fight,null);assert.equal(g.s.hour,10);assert.equal(g.s.minute,30);});
+check('victory',()=>{const g=new Game(undefined,()=>.99);g.oldMan();g.attack();while(g.s.fight)g.punch();assert.equal(g.s.ending,'victory');assert.equal(g.s.mafia_debt,0);});
+check('death',()=>{const g=new Game(undefined,()=>.99);g.oldMan();g.attack();g.s.hp=1;g.punch();assert.equal(g.s.ending,'death');});
+check('both crops: buy, plant, water, grow, harvest, sell',()=>Object.keys(SEEDS).forEach(type=>{const g=new Game(undefined,()=>0),c=SEEDS[type];g.buy(type);g.plant(0,type);g.water(0);g.advance(20);g.s.energy=100;g.water(0);g.advance(c.grow-20);g.harvest(0);assert.equal(g.s.farm.goods[type],c.yield);assert.equal(g.s.farm.plots[0],null);g.sell(type);assert.equal(g.s.money,5000-c.price+c.yield*c.sell);}));
+check('dry growth stops and rain helps',()=>{const g=new Game(undefined,()=>0);g.buy('padi');g.plant(0,'padi');g.advance(2);assert.equal(g.s.farm.plots[0].growth,0);g.s.weather='Hujan Ringan 🌧️';g.advance(2);assert(g.s.farm.plots[0].growth>1.9);});
+check('time and midnight rollover',()=>{const g=new Game();g.advance(48,90);assert.equal(g.s.day,3);assert.equal(g.s.hour,9);assert.equal(g.s.minute,30);});
+check('JSON save round-trip including fight and farm',()=>{const g=new Game();g.buy('padi');g.plant(0,'padi');g.oldMan();g.attack();const restored=new Game(JSON.parse(JSON.stringify(g.s)));assert.deepEqual(restored.s,g.s);});
+console.log(`${tests} test groups passed.`);
