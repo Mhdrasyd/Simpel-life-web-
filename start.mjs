@@ -1,0 +1,12 @@
+import {createArenaServer} from './server.mjs';
+const origin=process.env.RENDER_EXTERNAL_URL||'';
+const allowedOrigin=process.env.FPS_ALLOWED_ORIGIN||'';
+if(!origin.startsWith('https://')||!allowedOrigin.startsWith('https://'))throw Error('https_origin_required');
+const port=Number(process.env.PORT||'10000');
+if(!Number.isInteger(port)||port<1024||port>65535)throw Error('invalid_port');
+const app=createArenaServer({origin,allowedOrigin,backendOnly:true,maxRooms:1,lifetimeMs:0});
+app.server.listen(port,'0.0.0.0');
+let closing=false;
+const stop=()=>{if(closing)return;closing=true;app.close().finally(()=>process.exit(0));setTimeout(()=>process.exit(1),8000).unref();};
+process.once('SIGTERM',stop);
+process.once('SIGINT',stop);

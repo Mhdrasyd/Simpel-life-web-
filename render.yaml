@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: simple-life-fps
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: FPS_ALLOWED_ORIGIN
+        value: https://gameprojeksenak.vercel.app
